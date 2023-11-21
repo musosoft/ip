@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My IP Address</title>
+    <style>
+      body,
+      html {
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: monospace;
+        font-size: 8vw;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#" id="link"><span id="ip">Loading...</span></a>
+    <script>
+      fetch('https://api.ipify.org?format=json')
+        .then((r) => r.json())
+        .then((data) => (document.getElementById('ip').textContent = data.ip))
+        .catch(() => (document.getElementById('ip').textContent = 'Unavailable'));
+
+      document.getElementById('link').onclick = () => {
+        navigator.clipboard
+          .writeText(document.getElementById('ip').textContent)
+          .then(() => (document.getElementById('link').textContent = 'Copied!'))
+          .catch((err) => console.error('Error copying text: ', err));
+        return false;
+      };
+    </script>
+  </body>
+</html>
